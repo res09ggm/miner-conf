@@ -45,7 +45,7 @@ echo "Set hostname from ${HOSTNAME} to ${WORKER_NAME}-${WORKER_ID}?"
 read answer
 if echo $answer | grep -iq "^y"; then
     sudo sed -i "s/${HOSTNAME}/${WORKER_NAME}-${WORKER_ID}/" /etc/hosts
-    sudo hostnamectl set-hostname "${WORKER_NAME}${WORKER_ID}"
+    sudo hostnamectl set-hostname "${WORKER_NAME}-${WORKER_ID}"
 fi
 
 echo "Print config?"
