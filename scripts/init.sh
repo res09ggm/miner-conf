@@ -17,7 +17,7 @@ then
     echo "${INSTALL_DIR} already exists. Overwrite? [y/n]"
     read answer
     if echo $answer | grep -iq "^y" ;then
-        mv ${TMPDIR} ${INSTALL_DIR} #copy setup script up to current dir
+        echo "Overwriting existing directory ${INSTALL_DIR}"
     else
         echo -n "Removing tmp directory... "
         rm -rf ${TMPDIR}
@@ -26,4 +26,5 @@ then
     fi    
 fi
     
+mv ${TMPDIR} ${INSTALL_DIR} #copy setup script up to current dir
 exec ${INSTALL_DIR}/scripts/$SETUP_SCRIPT
