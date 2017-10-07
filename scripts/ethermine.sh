@@ -1,4 +1,5 @@
 #!/bin/bash
+[ -e /opt/miner/miner.conf ] && . /opt/miner/miner.conf
 GPU_FORCE_64BIT_PTR=0
 GPU_MAX_HEAP_SIZE=100
 GPU_USE_SYNC_OBJECTS=1
