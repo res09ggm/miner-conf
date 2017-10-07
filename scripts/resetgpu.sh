@@ -1,7 +1,5 @@
 #!/bin/bash
 [ -e /opt/miner/miner.conf ] && . /opt/miner/miner.conf
-GPU_CLOCK_OFFSET=0
-GPU_MEM_OFFSET=0
 
 for i in `seq 0 $((GPU_COUNT - 1))`;
 do
