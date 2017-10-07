@@ -19,7 +19,9 @@ then
     if echo $answer | grep -iq "^y" ;then
         mv ${TMPDIR} ${INSTALL_DIR} #copy setup script up to current dir
     else
-        echo "Cancelling"
+        echo -n "Removing tmp directory... "
+        rm -rf ${TMPDIR}
+        echo -n " ... done"
         exit 1
     fi    
 fi
