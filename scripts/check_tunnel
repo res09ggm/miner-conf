@@ -1,0 +1,4 @@
+#!/bin/bash
+
+pgrep -f ngrok
+[ $? -ne 0 ] && nohup /usr/local/bin/ngrok tcp 22 > /dev/null 2>&1 &
