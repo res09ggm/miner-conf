@@ -6,7 +6,7 @@ INSTALL_DIR='/opt/miner'
 
 echo "Init start"
 
-#Create temp dir and clone docker scripts project
+#Create temp dir and clone project
 echo "Creating tmp directory: ${TMPDIR}"
 mkdir ${TMPDIR}
 git clone ${REPO_URL} ${TMPDIR}
