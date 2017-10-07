@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 [ -e ../miner.conf ] && . ../miner.conf
 TMPDIR="/tmp/miner-$$"
 REPO_URL='https://github.com/res09ggm/miner-conf.git'
