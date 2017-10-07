@@ -26,5 +26,5 @@ then
     fi    
 fi
     
-mv ${TMPDIR} ${INSTALL_DIR} #copy setup script up to current dir
+mv ${TMPDIR} ${INSTALL_DIR}/ #copy setup script up to current dir
 exec ${INSTALL_DIR}/scripts/$SETUP_SCRIPT
