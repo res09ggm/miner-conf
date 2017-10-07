@@ -21,7 +21,7 @@ then
     else
         echo -n "Removing tmp directory... "
         rm -rf ${TMPDIR}
-        echo -n " ... done"
+        echo " ... done"
         exit 1
     fi    
 fi
