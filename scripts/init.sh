@@ -19,6 +19,7 @@ then
     read answer
     if echo $answer | grep -iq "^y" ;then
         echo "Overwriting existing directory ${INSTALL_DIR}"
+        mv /opt/miner /tmp/deleted/miner
     else
         echo -n "Removing tmp directory... "
         rm -rf ${TMPDIR}
