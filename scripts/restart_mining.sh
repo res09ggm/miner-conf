@@ -3,6 +3,6 @@
 
 sudo pkill -f -9 ethminer
 
-/usr/local/bin/resetgpu.sh
-/usr/local/bin/setgpu.sh
-/usr/local/bin/ethermine.sh
+/opt/miner/scripts/resetgpu.sh
+/opt/miner/scripts/setgpu.sh
+/opt/miner/scripts/ethermine.sh

@@ -6,7 +6,7 @@ GPU_USE_SYNC_OBJECTS=1
 GPU_MAX_ALLOC_PERCENT=100
 GPU_SINGLE_ALLOC_PERCENT=100
 
-nohup /usr/local/bin/ethminer --farm-recheck 200 --cuda --verbosity 9 \
+nohup /opt/miner/bin/ethminer --farm-recheck 200 --cuda --verbosity 9 \
 --stratum $ETH_STRATUM_URL:$ETH_STRATUM_PORT --stratum-client 2 \
 --user $ETH_WALLET_ADDRESS.$WORKER_NAME-$WORKER_ID \
 --cuda-streams 2 --cuda-schedule auto >> $ETH_LOG 2>&1 &

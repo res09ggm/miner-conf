@@ -10,7 +10,7 @@ GPU_SINGLE_ALLOC_PERCENT=100
 #--userpass 8c2fec07c4675f16a6ed44b147816fb80d879c38.1070_1 \
 #--cuda-block-size 128 --cuda-grid-size 8192 --cuda-streams 2 --cuda-schedule auto >> /var/log/ethminer/ethminer.log 2>&1'
 
-nohup /usr/local/bin/zecminer \
+nohup /opt/miner/bin/zecminer \
 --server us.hushmine.pro \
 --port 9009 \
 --user t1eKx46Fgghi2mG2MVmGUVUWyqb8H75gAaS.commerce-4 \
