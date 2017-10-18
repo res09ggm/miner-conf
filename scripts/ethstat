@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+[ -e /opt/miner/miner.conf ] && . /opt/miner/miner.conf
+
+LOG_HOME=/var/log/ethminer
+LOG_FILE=ethminer.log
+NVIDIA=false
+AMD=false
+
+[ -e /usr/bin/nvidia-smi ] && NVIDIA=true
+[ -e /usr/bin/glxinfo ] && AMD=true
+
+getNvGpuCount() {
+    local -i gpuCount=0;
+    if [ $NVIDIA = true ]; then
+        [ -e /usr/bin/nvidia-smi ] && local -i gpuCount=$(/usr/bin/nvidia-smi --list-gpus 2> /dev/null | wc -l)
+    fi
+    echo $gpuCount
+}
+
+floatToInt() {
+    local -i int=$(printf "%.0f" "$@" 2>/dev/null)
+    local -i status=$?
+    [ $status -eq 0 ] && echo ${int}
+    return $status
+}
+
+getHashStatus() {
+    local hash="$(tail -1 ${LOG_HOME}/${LOG_FILE}| sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | awk '{print $4}')"
+    local -i hashrate=$(floatToInt ${hash})
+    local -i status=$?
+    [ $status -eq 0 ] && echo $hashrate
+    return $status
+}
+
+main() {
+    mkdir -p "${LOG_HOME}"
+    for i in `seq 1 10`;
+    do
+        declare -i hash status
+        hash=$(getHashStatus)
+        status=$?
+        [ $hash -gt 0 ] && [ $status -eq 0 ] && exit 0
+
+        if [ $i -eq 10 ]; then
+            echo "$(date) : Restarting mining process" >> "${LOG_HOME}/ethstat.log"
+            /opt/miner/scripts/restart_mining.sh
+        fi
+        sleep 2;
+    done;
+    exit 2
+}
+
+main
+exit $?
