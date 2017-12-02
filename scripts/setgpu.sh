@@ -7,6 +7,7 @@ sudo nvidia-smi -pl ${GPU_POWER_LIMIT}
 for i in `seq 0 $((GPU_COUNT - 1))`;
 do
   sudo nvidia-settings \
+  --ctrl-display ${X_DISPLAY} \
   -a [gpu:$i]/GPUGraphicsClockOffset[2]=${GPU_CORE_CLOCK} \
   -a [gpu:$i]/GPUMemoryTransferRateOffset[2]=${GPU_MEM_CLOCK} \
   -a [gpu:$i]/GPUFanControlState=1 \
