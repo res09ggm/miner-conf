@@ -29,5 +29,5 @@ sshOpts=""
 execCommand="$1"
 
 for server in ${servers[@]}; do
-    ssh -t "${sshOpts}" "${server}" "${execCommand} 2>&1 > /dev/stderr"
+    ssh -t ${sshOpts} ${server} "${execCommand} 2>&1 > /dev/stderr"
 done;
