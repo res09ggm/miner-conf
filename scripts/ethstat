@@ -25,7 +25,7 @@ floatToInt() {
 }
 
 getHashStatus() {
-    local hash="$(tail -1 ${LOG_HOME}/${LOG_FILE}| sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | awk '{print $4}')"
+    local hash="$(tail -1 ${LOG_HOME}/${LOG_FILE} | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | awk '{print $4}')"
     local -i hashrate=$(floatToInt ${hash})
     local -i status=$?
     [ $status -eq 0 ] && echo $hashrate
@@ -33,7 +33,7 @@ getHashStatus() {
 }
 
 cudaErrors() {
-    echo $(tail -20 ${LOG_HOME}/${LOG_FILE} | grep -i "error")
+    echo $(tail -20 ${LOG_HOME}/${LOG_FILE} | sed "s,\x1B\[[0-9;]*[a-zA-Z],,g" | grep -i "Cuda error")
 }
 
 ethRestarts() {
