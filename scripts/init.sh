@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
+set -x
 [ -e ../miner.conf ] && . ../miner.conf
 TMPDIR="/tmp/miner-$$"
 REPO_URL='https://github.com/res09ggm/miner-conf.git'
 SETUP_SCRIPT='setup.sh'
 INSTALL_DIR='/opt/miner'
+RUN_SETUP="true"
 
+[ -n "$1" ] && echo Found arg $1 && [ "$1" == "--skip" ] || [ "$1" == "-s" ] && RUN_SETUP="false"
 echo "Init start"
 
 #Create temp dir and clone project
@@ -34,7 +37,7 @@ mv ${TMPDIR} ${INSTALL_DIR}/ #copy setup script up to current dir
 cd /usr/local/bin/
 for file in ${INSTALL_DIR}/scripts/*; do
   name=`basename ${file}`
-  if [ `readink -e ${name}` != ${file} ]; then
+  if [ "`readink -e ${name}`" != "${file}" ]; then
       rm ${name}
       ln -s ${file}
   else echo "Skipping file $name since symlink already exists"
@@ -42,4 +45,4 @@ for file in ${INSTALL_DIR}/scripts/*; do
 
 done
 
-exec ${INSTALL_DIR}/scripts/$SETUP_SCRIPT
+[ "${RUN_SETUP}" == "true" ] && exec ${INSTALL_DIR}/scripts/${SETUP_SCRIPT}
