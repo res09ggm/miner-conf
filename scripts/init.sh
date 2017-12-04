@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-set -x
 [ -e ../miner.conf ] && . ../miner.conf
 TMPDIR="/tmp/miner-$$"
 REPO_URL='https://github.com/res09ggm/miner-conf.git'
@@ -37,7 +36,7 @@ mv ${TMPDIR} ${INSTALL_DIR}/ #copy setup script up to current dir
 cd /usr/local/bin/
 for file in ${INSTALL_DIR}/scripts/*; do
   name=`basename ${file}`
-  if [ "`readink -e ${name}`" != "${file}" ]; then
+  if [ "`readlink -e ${name}`" != "${file}" ]; then
       rm ${name}
       ln -s ${file}
   else echo "Skipping file $name since symlink already exists"
