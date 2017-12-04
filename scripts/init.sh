@@ -29,4 +29,11 @@ then
 fi
     
 mv ${TMPDIR} ${INSTALL_DIR}/ #copy setup script up to current dir
+
+# Symlink our scripts to /usr/local/bin
+cd /usr/local/bin/
+for file in ${INSTALL_DIR}/scripts/*; do
+  ln -s ${file}
+done
+
 exec ${INSTALL_DIR}/scripts/$SETUP_SCRIPT

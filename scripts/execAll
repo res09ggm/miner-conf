@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+declare -a servers=(
+"commerce-2"
+"commerce-3"
+"commerce-4"
+"commerce-5"
+"commerce-6"
+"commerce-7"
+"commerce-8"
+"commerce-9"
+"commerce-10"
+"commerce-11"
+"commerce-12"
+"commerce-13"
+"commerce-14"
+"commerce-15"
+"commerce-16"
+"commerce-17"
+"commerce-18"
+"commerce-19"
+"commerce-20"
+"commerce-21"
+"commerce-22"
+"commerce-23"
+"commerce-24"
+)
+
+sshOpts=""
+execCommand="$1"
+
+for server in ${servers[@]}; do
+    ssh -t "${sshOpts} "${server}" "${execCommand} 2>&1 > /dev/stderr"
+done;

@@ -32,21 +32,47 @@ getHashStatus() {
     return $status
 }
 
-main() {
-    mkdir -p "${LOG_HOME}"
-    for i in `seq 1 10`;
-    do
-        declare -i hash status
-        hash=$(getHashStatus)
-        status=$?
-        [ $hash -gt 0 ] && [ $status -eq 0 ] && exit 0
+cudaErrors() {
+    echo $(tail -20 ${LOG_HOME}/${LOG_FILE} | grep -i "error")
+}
 
-        if [ $i -eq 10 ]; then
-            echo "$(date) : Restarting mining process" >> "${LOG_HOME}/ethstat.log"
-            /opt/miner/scripts/restart_mining.sh
-        fi
-        sleep 2;
-    done;
+ethRestarts() {
+    echo $(awk -vDate="`date -d'now-15 min' +%s`" -F " : " '{("date +%s -d\"" $1 "\"") | getline line; if (line > Date) {count++; print $0}}' ${LOG_HOME}/${LOG_FILE})
+}
+
+restartMiner() {
+    echo "$(date -Iseconds) : Restarting mining process" >> "${LOG_HOME}/ethstat.log"
+    /opt/miner/scripts/restart_mining.sh
+}
+
+main() {
+    # create log directory if needed.  This could be our first run since boot
+    [ ! -e ${LOG_HOME} ] && mkdir -p "${LOG_HOME}"
+
+    # If process isn't running start mining.
+    if [ ! `pgrep ethminer` ]; 
+        then restartMiner; 
+
+        # check hash rate
+        else
+            # Too many restarts in last 15 minutes and cuda errors, restart machine.
+            if ( (ethRestarts | wc -l) > 3 
+                 && (cudaErrors | wc -l) > 2)
+                then /sbin/shutdown -r now;
+            fi
+            for i in `seq 1 10`; do
+                declare -i hash status
+                hash=$(getHashStatus)
+                status=$?
+                [ $hash -gt 0 ] && [ $status -eq 0 ] && exit 0
+
+                if [ $i -eq 10 ]; then
+                    restartMiner
+                fi
+                sleep 2;
+            done;
+    fi
+
     exit 2
 }
 
