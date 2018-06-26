@@ -58,7 +58,7 @@ main() {
         else
             # Too many restarts in last 15 minutes and cuda errors, restart machine.
             if [ `ethRestarts | wc -l` -gt 3 ] && [ `cudaErrors | wc -l` -gt 2 ]
-                then /sbin/shutdown -r now;
+                for i in s u b; do echo $i | sudo tee /proc/sysrq-trigger; sleep 5; done
             fi
             for i in `seq 1 10`; do
                 declare -i hash status
